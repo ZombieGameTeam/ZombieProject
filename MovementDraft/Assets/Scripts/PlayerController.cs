@@ -1,20 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour 
 {
     public float moveSpeed = 10.0f;
     public float rotationSpeed = 10.0f;
 
+    /* Move to Model */
+    public float scale = 0f;
+    public float health = 100.0f;
+    public Image healthBar;
+
 	// Use this for initialization
-	void Start () {
-	
-	}
+	void Start () {}
 	
 	// Update is called once per frame
 	void Update () 
     {
         Move();
+        CheckLight();
+        CheckHealth();
 	}
 
     void Aim()
@@ -53,5 +59,34 @@ public class PlayerController : MonoBehaviour
         {
             Aim();
         }
+    }
+
+    void CheckLight()
+    {
+        if (Input.GetKeyUp("f"))
+        {
+            SwitchLight();
+        }
+    }
+    void SwitchLight()
+    {
+        Light light = GetComponentInChildren<Light>();
+        light.enabled = !light.enabled;
+    }
+
+    void CheckHealth()
+    {
+        healthBar = GameObject.FindGameObjectWithTag("HealthUI").GetComponent<Image>();
+        healthBar.fillAmount = health / 100.0f;
+    }
+
+    void inflictDamage()
+    {
+        //To Add
+    }
+
+    public void applyReceivedDamage(float damage)
+    {
+        health = health - damage;
     }
 }
