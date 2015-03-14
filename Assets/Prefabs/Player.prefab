@@ -28,9 +28,10 @@ GameObject:
   - 4: {fileID: 442128}
   - 114: {fileID: 11445458}
   - 108: {fileID: 10811366}
+  - 135: {fileID: 13589538}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +49,7 @@ GameObject:
   - 23: {fileID: 2304346}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,8 +87,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: .5}
+  m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
   m_Father: {fileID: 416868}
   m_RootOrder: 0
@@ -208,6 +209,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1f8a70de14fb242a49f762d3542f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 1
+--- !u!135 &13589538
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143952}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13629414
 CapsuleCollider:
   m_ObjectHideFlags: 1
