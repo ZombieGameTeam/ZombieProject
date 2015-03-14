@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour {
         Aim();
     }
 
+    void FixedUpdate()
+    {
+        transform.Translate(Vector3.forward);
+    }
+
     void Aim()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
