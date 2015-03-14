@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour 
 {
-    public float moveSpeed = 100.0f;
+    public float moveSpeed = 10.0f;
+    public float rotationSpeed = 10.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -13,7 +14,6 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        Aim();
         Move();
 	}
 
@@ -24,7 +24,11 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(ray,out hit))
         {
             Vector3 mousePosition = new Vector3(ray.GetPoint(hit.distance).x, transform.position.y, ray.GetPoint(hit.distance).z);
-            transform.LookAt(mousePosition);
+            Vector3 targetDir = mousePosition - transform.position;
+            float step = rotationSpeed * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+            Debug.DrawRay(transform.position, newDir, Color.red);
+            transform.rotation = Quaternion.LookRotation(newDir);
         }
     }
     void Move()
@@ -44,6 +48,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("d"))
         {
             transform.Translate((Vector3.right) * moveSpeed * Time.deltaTime);
+        }
+        if (Input.GetMouseButton(0))
+        {
+            Aim();
         }
     }
 }
