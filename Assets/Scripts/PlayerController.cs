@@ -2,14 +2,17 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-    //Plane ground;
     void Start()
     {
-        //ground = new Plane(Vector3.up, Vector3.zero);
     }
 
 
     void Update()
+    {
+        Aim();
+    }
+
+    void Aim()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit dist;
@@ -20,6 +23,4 @@ public class PlayerController : MonoBehaviour {
             transform.LookAt(clickPoint);
         }
     }
-
-    //void 
 }
