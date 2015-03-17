@@ -18,7 +18,7 @@ public class ZombieScript : MonoBehaviour
         playerTransform = player.GetComponent<Transform>();
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.position - playerTransform.position), rotationSpeed * Time.deltaTime);
-        transform.position = transform.position + Vector3.forward * moveSpeed * Time.deltaTime;
+        transform.position = transform.position - (playerTransform.position * moveSpeed * Time.deltaTime);
 
         if(attackTimer > 0)
         {
