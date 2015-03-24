@@ -54,12 +54,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraMovement.cs" />
-    <Compile Include="Assets\Scripts\NewCameraMovement.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\PlayerInstantiator.cs" />
+    <Compile Include="Assets\Scripts\CameraScripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Damage.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyModel.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyView.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\Old\EnemyAttack.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\Old\EnemyMovement.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\Old\EnemyScript.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\PlayerInstantiator.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\PlayerModel.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\PlayerView.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Scripts\ZombieScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>
