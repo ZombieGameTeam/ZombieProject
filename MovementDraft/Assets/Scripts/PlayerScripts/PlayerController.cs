@@ -48,6 +48,14 @@ public class PlayerController : MonoBehaviour
     private string animationName;
     /* --- */
 
+    /* Inventory Variables */
+    private Inventory inventory;
+    /* --- */
+
+    /* Defines */
+    private string PICKUP = "PickUp";
+    /* --- */
+
     void Awake()
     {
         // Create a layer mask for the floor layer.
@@ -62,6 +70,8 @@ public class PlayerController : MonoBehaviour
         gunLight = GetComponentInChildren<Light>();
 
         gunAudio = GetComponentInChildren<AudioSource>();
+        /*Get inventory*/
+        inventory = (Inventory)GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
 	// Use this for initialization
@@ -213,6 +223,19 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.transform == enemy)
         {
             enemyInRange = false;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.gameObject.tag == PICKUP)
+        {
+            print("Adding item.");
+            inventory.AddItem(other.GetComponent<Item>());
+            print("Added item.");
+
+            //other.gameObject.SetActive(false);
         }
     }
 

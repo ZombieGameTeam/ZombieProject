@@ -63,6 +63,10 @@
     <Compile Include="Assets\Scripts\EnemyScripts\Old\EnemyAttack.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\Old\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\Old\EnemyScript.cs" />
+    <Compile Include="Assets\Scripts\InventoryScripts\HandleCanvas.cs" />
+    <Compile Include="Assets\Scripts\InventoryScripts\Inventory.cs" />
+    <Compile Include="Assets\Scripts\InventoryScripts\Item.cs" />
+    <Compile Include="Assets\Scripts\InventoryScripts\Slot.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerInstantiator.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerModel.cs" />
