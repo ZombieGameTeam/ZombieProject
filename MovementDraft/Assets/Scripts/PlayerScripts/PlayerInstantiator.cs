@@ -7,5 +7,9 @@ public class PlayerInstantiator : Singleton<PlayerInstantiator>
     public Vector3 location;
     protected PlayerInstantiator() { }
 	// Use this for initialization
-    void Start() { Instantiate(playerModel, location, Quaternion.identity); }
+    void Start() 
+    {
+        GameObject player = (GameObject)Instantiate(playerModel, location, Quaternion.identity);
+        player.name = "Player";
+    }
 }

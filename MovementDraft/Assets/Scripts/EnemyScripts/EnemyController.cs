@@ -54,6 +54,20 @@ public class EnemyController : MonoBehaviour
         UpdateView();
 	}
 
+    public void becomeSelected()
+    {
+        print("Selected");
+        gameObject.GetComponent<Light>().enabled = true; /* Redundant, I know, dar nu merge cu checkSelection */
+        enemyModel.IsSelected = true;
+    }
+
+    public void deselect()
+    {
+        print("De selected");
+        gameObject.GetComponent<Light>().enabled = false;
+        enemyModel.IsSelected = false;
+    }
+
     void UpdateTimer()
     {
         timer += Time.deltaTime;

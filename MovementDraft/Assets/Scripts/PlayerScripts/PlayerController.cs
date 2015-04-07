@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     /* --- */
 
     /* Enemy references */
+    private GameObject selectedEnemy;
     private Transform enemy;
+    private GameObject[] enemies;
     private EnemyController enemyController;
     /* --- */
 
@@ -77,27 +79,75 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+        enemy = null;
+        enemies = null;
+        selectedEnemy = null;
         Animation();
     }
 
     void Update()
     {
-        /* Must find a way to cache it, move it from here */
-        try
+        GetEnemyList();
+        if(selectedEnemy == null)
         {
-            enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
-            enemyController = enemy.GetComponent<EnemyController>();
-            if (enemy != null)
-            {
-                UpdateTimer();
-                if (Input.GetMouseButton(0))
-                {
-                    Attack();
-                }
-            }
+            print("Getting enemy");
+            GetEnemy();
         }
-        catch (Exception e) { }
+        /* Must find a way to cache it, move it from here */
+        if (Input.GetKey("f"))
+        {
+            SelectEnemy();
+        }
+        if (Input.GetMouseButton(0))
+        {
+            Action();
+        }
+        UpdateTimer();
         CheckEffects();
+    }
+
+    void GetEnemyList()
+    {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    }
+
+    void GetEnemy()
+    {
+        selectedEnemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (selectedEnemy != null)
+        {
+            selectedEnemy.GetComponent<EnemyController>().becomeSelected();
+            enemy = selectedEnemy.transform;
+            enemyController = enemy.GetComponent<EnemyController>();
+            print("Got an enemy");
+        }
+    }
+
+    void SelectEnemy()
+    {
+        int index = UnityEngine.Random.Range(0, enemies.Length);
+        //print("F pressed");
+        //print("Enemy Secected - F. Secected: " + index.ToString());
+        if (selectedEnemy != null)
+        {
+            selectedEnemy.GetComponent<EnemyController>().deselect();
+            selectedEnemy.name = "Enemy";
+        }
+        selectedEnemy =  enemies[index];
+        selectedEnemy.name = "SelectedEnemy";
+        selectedEnemy.GetComponent<EnemyController>().becomeSelected();
+        enemy = selectedEnemy.transform; 
+        enemyController = enemy.GetComponent<EnemyController>();
+    }
+    void Action()
+    {
+        //print("Action 0");
+        if (selectedEnemy != null)
+        {
+            //print("Action 1");
+            Attack();
+        }
+        //catch (Exception e) { print("In Player Controller action: " + e.ToString()); }
     }
 	// Update is called once per frame
 	void FixedUpdate () 
@@ -174,12 +224,30 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        if (timer >= timeBetweenAttacks)
+        //print("Attack 0");
+        if (selectedEnemy != null && enemy != null && enemyController != null)
         {
-            timer = 0f;
-            if (enemyController.isDead() == false && enemyInRange == true)
+            //print("Attack 1");
+            if (timer >= timeBetweenAttacks)
             {
-                Shoot();
+                //print("Attack 2");
+                timer = 0f;
+                if (enemyController.isDead() == false && enemyInRange == true)
+                {
+                    //print("Shoot.");
+                    Shoot();
+                }
+                else
+                {
+                    print("");
+                    //print("Enemy Controller: "+enemyController.isDead().ToString());
+                    //print("Enemy In Range:"+enemyInRange.ToString());
+                }
+            }
+            else
+            {
+                print("");
+                //print("Time passed: "+timer.ToString()+" out of "+timeBetweenAttacks.ToString());
             }
         }
     }
@@ -196,6 +264,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
+            //print("Shoot 0");
             EnemyController enemyTest = shootHit.collider.GetComponentInParent<EnemyController>();
             if (enemyTest != null)
             {
@@ -212,10 +281,13 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        enemyInRange = true;
+        /*
         if (other.gameObject.transform == enemy)
         {
             enemyInRange = true;
         }
+         * */
     }
 
     void OnTriggerExit(Collider other)
@@ -228,14 +300,16 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        print("On Collision 0");
         Collider other = collision.collider;
         if (other.gameObject.tag == PICKUP)
         {
-            print("Adding item.");
-            inventory.AddItem(other.GetComponent<Item>());
-            print("Added item.");
-
-            //other.gameObject.SetActive(false);
+            print("On Collision 1");
+            if (inventory.AddItem(other.GetComponent<Item>()))
+            {
+                print("On Collision 2");
+                other.gameObject.SetActive(false);
+            }
         }
     }
 

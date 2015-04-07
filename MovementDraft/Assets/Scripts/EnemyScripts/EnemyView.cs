@@ -24,21 +24,49 @@ public class EnemyView : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        healthBarWorldPosition = transform.position + new Vector3(0.0f, 3.0f, 0.0f);
-        healthBarScreenPosition = Camera.main.WorldToScreenPoint(healthBarWorldPosition);
-        enemyHealthUI.transform.position = healthBarScreenPosition;
+        checkSelection();
+        if(enemyModel.IsSelected == true)
+        {
+            print("Selected");
+            enemyHealthUI.enabled = true;
+            healthBarWorldPosition = transform.position + new Vector3(0.0f, 3.0f, 0.0f);
+            healthBarScreenPosition = Camera.main.WorldToScreenPoint(healthBarWorldPosition);
 
-        enemyHealthUI.value = enemyModel.currentHealth/100;
+            if (enemyHealthUI != null)
+            {
+                enemyHealthUI.transform.position = healthBarScreenPosition;
+                enemyHealthUI.value = enemyModel.currentHealth / 100;
+            }
+        }
+        else
+        {
+            print("No selection");
+            enemyHealthUI.enabled = false;
+        }
     }
 
     public void Death()
     {
         StartCoroutine("DeathEffect",0.5f);
-        GetComponent<NavMeshAgent>().enabled = false;
-        GetComponent<EnemyController>().enabled = false;
-        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-
+        //GetComponent<NavMeshAgent>().enabled = false;
+        //GetComponent<EnemyController>().enabled = false;
+        //GetComponent<EnemyModel>().enabled = false;
+        //GetComponent<EnemyView>().enabled = false;
+        //GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        Destroy(gameObject);
         Destroy(enemyHealthUI);
+    }
+
+    private void checkSelection()
+    {
+        if (enemyModel.IsSelected == true)
+        {
+            gameObject.GetComponent<Light>().enabled = true;
+        }
+        else
+        {
+            gameObject.GetComponent<Light>().enabled = false;
+        }
     }
 
     IEnumerator DeathEffect()
@@ -46,6 +74,5 @@ public class EnemyView : MonoBehaviour
         GameObject explosion = (GameObject)Instantiate(zombieDeathExplosion, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(3);
         Destroy(explosion);
-
     }
 }
