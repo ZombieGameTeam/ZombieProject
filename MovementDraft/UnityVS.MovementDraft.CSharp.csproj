@@ -67,6 +67,16 @@
     <Compile Include="Assets\Scripts\InventoryScripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\InventoryScripts\Item.cs" />
     <Compile Include="Assets\Scripts\InventoryScripts\Slot.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\DrawMap.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Map\Cell.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Map\Map.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Map\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Objects\AmmoPack.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Objects\HealthPack.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Objects\Object.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Rooms\MediumRoom.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Rooms\Room.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorScripts\Rooms\RoomsPlacer.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerInstantiator.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerModel.cs" />
