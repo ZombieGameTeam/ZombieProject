@@ -25,24 +25,32 @@ public class EnemyView : MonoBehaviour
 	void Update () 
     {
         checkSelection();
-        if(enemyModel.IsSelected == true)
-        {
-            print("Selected");
-            enemyHealthUI.enabled = true;
-            healthBarWorldPosition = transform.position + new Vector3(0.0f, 3.0f, 0.0f);
-            healthBarScreenPosition = Camera.main.WorldToScreenPoint(healthBarWorldPosition);
-
-            if (enemyHealthUI != null)
-            {
-                enemyHealthUI.transform.position = healthBarScreenPosition;
-                enemyHealthUI.value = enemyModel.currentHealth / 100;
-            }
-        }
-        else
-        {
-            print("No selection");
-            enemyHealthUI.enabled = false;
-        }
+		if(enemyModel != null)
+		{
+			if(enemyModel.IsSelected == true)
+			{
+				if(enemyHealthUI != null)
+				{
+					enemyHealthUI.enabled = true;
+					healthBarWorldPosition = transform.position + new Vector3(0.0f, 3.0f, 0.0f);
+					healthBarScreenPosition = Camera.main.WorldToScreenPoint(healthBarWorldPosition);
+				}
+				
+				if (enemyHealthUI != null)
+				{
+					enemyHealthUI.transform.position = healthBarScreenPosition;
+					enemyHealthUI.value = enemyModel.currentHealth / 100;
+				}
+			}
+			else
+			{
+				//print("No selection");
+				if (enemyHealthUI != null)
+				{
+					enemyHealthUI.enabled = false;
+				}
+			}
+		}
     }
 
     public void Death()

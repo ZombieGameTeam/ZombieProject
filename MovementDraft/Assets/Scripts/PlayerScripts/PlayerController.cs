@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
 using System;
 
 public class PlayerController : MonoBehaviour 
@@ -21,11 +21,12 @@ public class PlayerController : MonoBehaviour
     /* Attack variables */
     public float timeBetweenAttacks = 0.15f;
     public float timeBetweenBullets = 0.15f;
-    public float attackDamage = 50.0f;
     private AudioSource gunAudio;
     private float timer;
     private float effectsDisplayTime = 0.2f;        
     private bool enemyInRange = false;
+
+	public float attackDamage = 0.0f;
     /* --- */
 
     /* Shoot variables */
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
         GetEnemyList();
         if(selectedEnemy == null)
         {
-            print("Getting enemy");
+            //print("Getting enemy");
             GetEnemy();
         }
         /* Must find a way to cache it, move it from here */
@@ -98,12 +99,27 @@ public class PlayerController : MonoBehaviour
         {
             SelectEnemy();
         }
-        if (Input.GetMouseButton(0))
+
+		if (Input.GetKey("space"))
+		{
+			if(playerModel.currentWeapon == Weapon.PISTOL)
+			{
+				playerModel.currentWeapon = Weapon.MACHINEGUN;
+			}
+			else
+			{
+				playerModel.currentWeapon = Weapon.PISTOL;
+			}
+
+		}
+
+		if (Input.GetMouseButton(0))
         {
             Action();
         }
         UpdateTimer();
         CheckEffects();
+		attackDamage = playerModel.damageDictionary[playerModel.currentWeapon];
     }
 
     void GetEnemyList()
@@ -119,7 +135,7 @@ public class PlayerController : MonoBehaviour
             selectedEnemy.GetComponent<EnemyController>().becomeSelected();
             enemy = selectedEnemy.transform;
             enemyController = enemy.GetComponent<EnemyController>();
-            print("Got an enemy");
+            //print("Got an enemy");
         }
     }
 
@@ -225,18 +241,27 @@ public class PlayerController : MonoBehaviour
                 if (enemyController.isDead() == false && enemyInRange == true)
                 {
                     //print("Shoot.");
-                    Shoot();
+					if(playerModel.currentAmmon > 0)
+					{
+						Shoot();
+						playerModel.currentAmmon--;
+						Statistics.instance.shotsFired++;
+					}
+					else
+					{
+						Debug.Log("Ammon: " + playerModel.currentAmmon);
+					}
                 }
                 else
                 {
-                    print("");
+                    //print("");
                     //print("Enemy Controller: "+enemyController.isDead().ToString());
                     //print("Enemy In Range:"+enemyInRange.ToString());
                 }
             }
             else
             {
-                print("");
+                //print("");
                 //print("Time passed: "+timer.ToString()+" out of "+timeBetweenAttacks.ToString());
             }
         }
@@ -258,6 +283,7 @@ public class PlayerController : MonoBehaviour
             EnemyController enemyTest = shootHit.collider.GetComponentInParent<EnemyController>();
             if (enemyTest != null)
             {
+				Debug.Log("Dealing " + attackDamage + " damage.");
                 enemyController.applyDamage(new Damage(attackDamage), shootHit.point);
             }
 
@@ -290,14 +316,14 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print("On Collision 0");
+        //print("On Collision 0");
         Collider other = collision.collider;
         if (other.gameObject.tag == PICKUP)
         {
-            print("On Collision 1");
+            //print("On Collision 1");
             if (inventory.AddItem(other.GetComponent<Item>()))
             {
-                print("On Collision 2");
+                //print("On Collision 2");
                 other.gameObject.SetActive(false);
             }
         }

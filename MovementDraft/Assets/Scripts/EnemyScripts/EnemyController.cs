@@ -56,14 +56,14 @@ public class EnemyController : MonoBehaviour
 
     public void becomeSelected()
     {
-        print("Selected");
+        //print("Selected");
         gameObject.GetComponent<Light>().enabled = true; /* Redundant, I know, dar nu merge cu checkSelection */
         enemyModel.IsSelected = true;
     }
 
     public void deselect()
     {
-        print("De selected");
+        //print("De selected");
         gameObject.GetComponent<Light>().enabled = false;
         enemyModel.IsSelected = false;
     }
@@ -123,6 +123,7 @@ public class EnemyController : MonoBehaviour
     {
         if(isDead())
         {
+			Statistics.instance.enemyKilled++;
             enemyView.Death();
         }
     }
