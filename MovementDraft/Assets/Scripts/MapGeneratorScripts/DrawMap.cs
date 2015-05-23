@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DrawMap : MonoBehaviour {
+public class DrawMap : Singleton<DrawMap> {
 
     private int sizeOfTile = 10;
    

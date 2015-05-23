@@ -10,8 +10,7 @@ public class PlayerInstantiator : Singleton<PlayerInstantiator>
 	// Use this for initialization
     void Start() 
     {   
-        Instantiate(dungeon, Vector3.zero, Quaternion.identity);
-        
+		transform.position = DrawMap.Instance.getStartPosition ();
 
         GameObject player = (GameObject)Instantiate(playerModel, location, Quaternion.identity);
         player.name = "Player";
